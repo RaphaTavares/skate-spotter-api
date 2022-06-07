@@ -32,11 +32,11 @@ const AuthController = {
         var {accessToken, refreshToken} = await AuthAppService.signup(req, res);
      
         if(accessToken && refreshToken){
-            await res.cookie("access-token", accessToken, {
+            res.cookie("access-token", accessToken, {
              expires: new Date(Date.now() + 1000 * 60 * 60 * 3),
              sameSite: "none",
            });
-            await res.cookie("refresh-token", refreshToken, {
+            res.cookie("refresh-token", refreshToken, {
              expires: new Date(Date.now() + 1000 * 60 * 60 * 24 * 7),
              sameSite: "none",
            });
