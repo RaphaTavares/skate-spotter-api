@@ -1,8 +1,10 @@
 import prisma from '../4- Infrastructure/bd.js';
 import AuthService from '../3- Services/AuthService.js';
+import bcrypt from 'bcrypt';
+
 const AuthAppService = {
     async login(email, password, res) {
-        const user = await prisma.user.findUnique({where: {email}});
+        const user = await prisma.user.findFirst({where: {email}});
         if(!user) return null;
 
         const valid = await bcrypt.compare(password, user.password);

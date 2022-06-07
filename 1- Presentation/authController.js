@@ -29,14 +29,14 @@ const AuthController = {
         res.sendStatus(400);
     },
     async signup_post(req, res){
-        var result = await AuthAppService.signup(req, res);
+        var {accessToken, refreshToken} = await AuthAppService.signup(req, res);
      
         if(accessToken && refreshToken){
-         res.cookie("access-token", accessToken, {
+            await res.cookie("access-token", accessToken, {
              expires: new Date(Date.now() + 1000 * 60 * 60 * 3),
              sameSite: "none",
            });
-           res.cookie("refresh-token", refreshToken, {
+            await res.cookie("refresh-token", refreshToken, {
              expires: new Date(Date.now() + 1000 * 60 * 60 * 24 * 7),
              sameSite: "none",
            });
