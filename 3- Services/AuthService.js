@@ -1,17 +1,19 @@
-export default AuthService = {
+import jwt from "jsonwebtoken";
+
+const AuthService = {
     createUserTokens(user) {
         const refreshSecret = process.env.REFRESH_TOKEN_SECRET;
         const accessSecret = process.env.ACCESS_TOKEN_SECRET;
 
-        const refreshToken = sign(
-            { userId: user.id, jwt_validator: user.jwt_validator, role: user.role },
+        const refreshToken = jwt.sign(
+            { userId: user.id, isAdmin: user.isAdmin },
             refreshSecret,
             {
             expiresIn: "7d",
             }
         );
-        const accessToken = sign(
-            { userId: user.id, jwt_validator: user.jwt_validator, role: user.role },
+        const accessToken = jwt.sign(
+            { userId: user.id, isAdmin: user.isAdmin },
             accessSecret,
             {
             expiresIn: "3h",
@@ -21,3 +23,5 @@ export default AuthService = {
         return { refreshToken, accessToken };
     },
 }
+
+export default AuthService;

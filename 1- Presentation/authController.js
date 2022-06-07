@@ -28,8 +28,8 @@ const AuthController = {
     
         res.sendStatus(400);
     },
-    signup_post(req, res){
-        var result = AuthAppService.signup(req, res);
+    async signup_post(req, res){
+        var result = await AuthAppService.signup(req, res);
      
         if(accessToken && refreshToken){
          res.cookie("access-token", accessToken, {
