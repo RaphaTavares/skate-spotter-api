@@ -32,11 +32,11 @@ model spot {
 }
 
 model user {
-  id         Int       @id
+  id         Int       @id @default(autoincrement())
   lastname   String    @db.VarChar(255)
   firstname  String    @db.VarChar(255)
   username   String    @db.VarChar(255)
-  email      String    @db.VarChar(255)
+  email      String    @unique(map: "user_un") @db.VarChar(255)
   password   String    @db.VarChar(255)
   isadmin    Boolean?
   created_at DateTime  @db.Timestamptz(6)

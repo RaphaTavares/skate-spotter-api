@@ -7,41 +7,40 @@ import AuthAppService from '../2- Application/AuthAppService.js';
 // }
 
 const AuthController = {
-    login_post(req, res){
+    async login_post(req, res){
+
+      try{
         const { email, password } = req.body;
     
-        var { accessToken, refreshToken } = AuthAppService.login(email, password, res);
-    
-        if(accessToken && refreshToken)
+        var { accessToken } = await AuthAppService.login(email, password, res);
+        
+        if(accessToken)
         {
         res.cookie("access-token", accessToken, {
             expires: new Date(Date.now() + 1000 * 60 * 60 * 3),
             sameSite: "none",
           });
-          res.cookie("refresh-token", refreshToken, {
-            expires: new Date(Date.now() + 1000 * 60 * 60 * 24 * 7),
-            sameSite: "none",
-          });
-    
           res.sendStatus(201);
         }
-    
-        res.sendStatus(400);
+      }
+      catch (e){
+        res.status(400).send(e.message);
+      }
     },
     async signup_post(req, res){
-        var {accessToken, refreshToken} = await AuthAppService.signup(req, res);
+      try{
+        var { accessToken } = await AuthAppService.signup(req, res);
      
-        if(accessToken && refreshToken){
+        if(accessToken){
             res.cookie("access-token", accessToken, {
              expires: new Date(Date.now() + 1000 * 60 * 60 * 3),
              sameSite: "none",
            });
-            res.cookie("refresh-token", refreshToken, {
-             expires: new Date(Date.now() + 1000 * 60 * 60 * 24 * 7),
-             sameSite: "none",
-           });
-     
-           res.sendStatus(201);
+           res.sendStatus(200);
+        }
+      }
+        catch (e){
+          res.status(400).send(e.message);
         }
      }
 }

@@ -2,16 +2,8 @@ import jwt from "jsonwebtoken";
 
 const AuthService = {
     createUserTokens(user) {
-        const refreshSecret = process.env.REFRESH_TOKEN_SECRET;
         const accessSecret = process.env.ACCESS_TOKEN_SECRET;
 
-        const refreshToken = jwt.sign(
-            { userId: user.id, isAdmin: user.isAdmin },
-            refreshSecret,
-            {
-            expiresIn: "7d",
-            }
-        );
         const accessToken = jwt.sign(
             { userId: user.id, isAdmin: user.isAdmin },
             accessSecret,
@@ -20,7 +12,7 @@ const AuthService = {
             }
         );
 
-        return { refreshToken, accessToken };
+        return { accessToken };
     },
 }
 
