@@ -1,11 +1,5 @@
 import AuthAppService from '../2- Application/AuthAppService.js';
 
-// const createToken = id => {
-//     return jwt.sign({ id }, jwtSecret, {
-//         expiresIn: '2h'
-//     });
-// }
-
 const AuthController = {
     async login_post(req, res){
 
@@ -16,7 +10,7 @@ const AuthController = {
         
         if(accessToken)
         {
-        res.cookie("access-token", accessToken, {
+        res.cookie("access_token", accessToken, {
             expires: new Date(Date.now() + 1000 * 60 * 60 * 3),
             sameSite: "none",
           });
@@ -32,7 +26,7 @@ const AuthController = {
         var { accessToken } = await AuthAppService.signup(req, res);
      
         if(accessToken){
-            res.cookie("access-token", accessToken, {
+            res.cookie("access_token", accessToken, {
              expires: new Date(Date.now() + 1000 * 60 * 60 * 3),
              sameSite: "none",
            });
