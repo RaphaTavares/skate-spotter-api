@@ -17,4 +17,5 @@ app.use(authRoutes);
 
 app.use('/flag', requireAuth, (req, res) => res.status(200).json({flag: "You're logged in."}));
 
+app.use('/test', (req, res) => res.status(200).json({response: "everything ok my brotha"}));
 app.listen(port);
