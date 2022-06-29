@@ -1,9 +1,9 @@
 import jwt from'jsonwebtoken';
 
-const jwtScret = process.env.JWTSECRET;
+const jwtScret = process.env.JWT_SECRET;
 
 const requireAuth = (req, res, next) =>{
-    const token = req.body.token;
+    const token = req.body.acces_token;
     
     if(token){
         jwt.verify(token, jwtSecret, (err, decodedToken) =>{
