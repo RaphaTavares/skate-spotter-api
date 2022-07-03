@@ -1,12 +1,7 @@
 import AuthAppService from '../2- Application/AuthAppService.js';
 
-// const createToken = id => {
-//     return jwt.sign({ id }, jwtSecret, {
-//         expiresIn: '2h'
-//     });
-// }
-
 const AuthController = {
+
     async login_post(req, res){
 
       try{
