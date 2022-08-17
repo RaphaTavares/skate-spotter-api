@@ -11,6 +11,11 @@ const AuthAppService = {
         if(!valid) throw new Error("Senha incorreta");
 
         const logged = await prisma.user.update({where: {email}, data: {islogged: true}});
+        
+        res.cookie("islogged", logged.islogged, {
+            expires: new Date(Date.now() + 1000 * 60 * 60 * 3),
+            sameSite: "none",
+        });
 
         return logged.islogged;
         },
@@ -24,6 +29,18 @@ const AuthAppService = {
         const user = await prisma.user.create({data: req.body});
         
         return user;
+    },
+
+    async signout(req, res){
+        res.cookie("islogged", false, {
+            expires: new Date(Date.now() + 3),
+            sameSite: "none",
+        });
+
+        console.log(req.body.email);
+        await prisma.user.update({where: {email: req.body.email}, data: {islogged: false}});
+
+        return true;
     }
 };
 

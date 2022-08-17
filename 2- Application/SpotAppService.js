@@ -12,6 +12,14 @@ const SpotAppService = {
         const spot = await prisma.spot.findFirst({where: {id : parseInt(id)}});
 
         return spot;
+    },
+
+    async createSpot(spot){
+        spot.created_at = new Date();
+        spot.updated_at = new Date();
+        const createdSpot = await prisma.spot.create({data: spot});
+
+        return createdSpot;
     }
 };
 

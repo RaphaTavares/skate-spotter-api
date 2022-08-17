@@ -4,7 +4,7 @@ import cookieParser from "cookie-parser";
 
 import authRoutes from './1- Presentation/routes/auth.js';
 import spotRoutes from './1- Presentation/routes/spot.js';
-
+import logoutRoute from './1- Presentation/routes/auth.js';
 import requireAuth from './middlewares/authMiddleware.js';
 
 const port = process.env.PORT;
@@ -20,6 +20,7 @@ app.listen(port, () => {
 
 app.use(authRoutes);
 
-app.use(spotRoutes);
+app.use(requireAuth, logoutRoute);
+app.use(requireAuth, spotRoutes);
 
 app.use('/flag', requireAuth, (req, res) => res.status(200).json({flag: "You're logged in."}));

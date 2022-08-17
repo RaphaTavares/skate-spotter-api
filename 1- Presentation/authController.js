@@ -25,7 +25,17 @@ const AuthController = {
           console.log("to na exception" + e.message);
           res.status(400).send(e.message);
         }
-     }
+      },
+      async signout_post(req, res){
+        try{
+          await AuthAppService.signout(req, res);
+
+          res.status(200).send("deslogado");
+        }
+        catch(e){
+          res.status(400).send(e.message);
+        }
+      }
 }
 
 export default AuthController;

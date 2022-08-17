@@ -20,6 +20,17 @@ const SpotController = {
         catch (e){
           res.status(400).send(e.message);
         }
+     },
+
+     async create_spot(req, res){
+      try{
+        const { spot } = req.body;
+        var createdSpot = await SpotAppService.createSpot(spot);
+        res.status(200).send(createdSpot);
+      }
+      catch(e){
+        res.status(400).send(e.message);
+      }
      }
 }
 
