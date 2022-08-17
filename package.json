@@ -7,7 +7,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node app.js",
-    "prisma": ""
+    "prisma": "npx prisma db pull && npx prisma generate"
   },
   "author": "",
   "license": "ISC",

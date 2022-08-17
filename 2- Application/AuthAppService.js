@@ -10,17 +10,20 @@ const AuthAppService = {
         const valid = await bcrypt.compare(password, user.password);
         if(!valid) throw new Error("Senha incorreta");
 
-        const { accessToken } = AuthService.createUserTokens(user);
+        const logged = await prisma.user.update({where: {email}, data: {islogged: true}});
 
-        return { accessToken };
+        return logged.islogged;
         },
 
     async signup(req, res){
+        req.body.islogged = false;
+        var now = new Date();
+        req.body.updated_at = now;
+        req.body.created_at = now;
+        console.table(req.body);
         const user = await prisma.user.create({data: req.body});
-
-        const { accessToken } = AuthService.createUserTokens(user);
-
-        return { accessToken };
+        
+        return user;
     }
 };
 

@@ -41,6 +41,7 @@ model user {
   isadmin    Boolean?
   created_at DateTime  @db.Timestamptz(6)
   updated_at DateTime? @db.Timestamptz(6)
+  islogged   Boolean?  @default(false)
   spot       spot[]
 }
 

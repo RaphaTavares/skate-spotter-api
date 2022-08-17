@@ -6,34 +6,23 @@ const AuthController = {
       try{
         const { email, password } = req.body;
     
-        var { accessToken } = await AuthAppService.login(email, password, res);
+        const logged = await AuthAppService.login(email, password, res);
         
-        if(accessToken)
-        {
-        res.cookie("access_token", accessToken, {
-            expires: new Date(Date.now() + 1000 * 60 * 60 * 3),
-            sameSite: "none",
-          });
-          res.sendStatus(201);
-        }
-      }
+          res.status(200).send(logged);
+       }
       catch (e){
         res.status(400).send(e.message);
       }
     },
     async signup_post(req, res){
       try{
-        var { accessToken } = await AuthAppService.signup(req, res);
+        console.log("to aqui");
+        await AuthAppService.signup(req, res);
      
-        if(accessToken){
-            res.cookie("access_token", accessToken, {
-             expires: new Date(Date.now() + 1000 * 60 * 60 * 3),
-             sameSite: "none",
-           });
-           res.sendStatus(200);
+           res.status(200).send(true);
         }
-      }
         catch (e){
+          console.log("to na exception" + e.message);
           res.status(400).send(e.message);
         }
      }
