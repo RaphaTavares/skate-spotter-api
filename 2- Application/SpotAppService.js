@@ -14,9 +14,13 @@ const SpotAppService = {
         return spot;
     },
 
-    async createSpot(spot){
+    async createSpot(spot, email){
         spot.created_at = new Date();
         spot.updated_at = new Date();
+
+        var user = await prisma.user.findFirst({where: {email}})
+        spot.user_id = user.id;
+        console.log(spot);
         const createdSpot = await prisma.spot.create({data: spot});
 
         return createdSpot;

@@ -7,16 +7,7 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model image {
-  id         Int       @id
-  spot_id    Int
-  created_at DateTime  @db.Timestamptz(6)
-  updated_at DateTime? @db.Timestamptz(6)
-  spot       spot      @relation(fields: [spot_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_spot")
-}
-
 model spot {
-  id          Int       @id
   user_id     Int
   address_zip String?   @db.VarChar(255)
   latitude    String    @db.VarChar(255)
@@ -27,8 +18,8 @@ model spot {
   status      status
   created_at  DateTime  @db.Timestamptz(6)
   updated_at  DateTime? @db.Timestamptz(6)
+  id          Int       @id(map: "spot_pk") @default(autoincrement())
   user        user      @relation(fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_user")
-  image       image[]
 }
 
 model user {

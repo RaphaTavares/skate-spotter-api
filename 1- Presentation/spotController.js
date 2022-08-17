@@ -24,11 +24,12 @@ const SpotController = {
 
      async create_spot(req, res){
       try{
-        const { spot } = req.body;
-        var createdSpot = await SpotAppService.createSpot(spot);
+        const { spot, userEmail } = req.body;
+        var createdSpot = await SpotAppService.createSpot(spot, userEmail);
         res.status(200).send(createdSpot);
       }
       catch(e){
+        console.log(e.message);
         res.status(400).send(e.message);
       }
      }

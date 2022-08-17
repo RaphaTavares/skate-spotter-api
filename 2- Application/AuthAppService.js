@@ -4,19 +4,26 @@ import bcrypt from 'bcrypt';
 
 const AuthAppService = {
     async login(email, password, res) {
+        console.log("DOIS");
+
         const user = await prisma.user.findFirst({where: {email}});
         if(!user) throw new Error("User not found");
+        
+        console.log("UM");
 
         const valid = await bcrypt.compare(password, user.password);
         if(!valid) throw new Error("Senha incorreta");
 
+        console.log('to aqui dentrinho');
         const logged = await prisma.user.update({where: {email}, data: {islogged: true}});
         
+        console.log("não passou");
         res.cookie("islogged", logged.islogged, {
             expires: new Date(Date.now() + 1000 * 60 * 60 * 3),
             sameSite: "none",
         });
 
+        console.log("passou");
         return logged.islogged;
         },
 
